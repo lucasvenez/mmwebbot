@@ -81,7 +81,7 @@ def parse(identifier, columns, output_path):
         
     return result
 
-'''
+
 ####################################################################################
 # CLINICAL
 ####################################################################################
@@ -228,7 +228,7 @@ parse('5410b4207830e1f92a2afdd6', ['best_response_second_line'],
 
 parse('54ed1676a7c8952a8b1f62da', ['best_response_third_line'], 
             'data/clinical_outcome/treatment_response/best_response_third_line.tsv')
-'''
+
 parse('51a4dd2fc026bea0862c61cd', ['best_response'], 
             'data/clinical_outcome/treatment_response/best_response.tsv')
 
