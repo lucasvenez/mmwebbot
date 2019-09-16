@@ -2,7 +2,7 @@
 
 It aims at collecting data from the research.themmrf.org repository automatically.
 
-# Execution Instructions
+## Execution Instructions
 
 To run this application you need a valid login and password for the research.themmrf.org repository. You should ask a valid login at https://themmrf.org/rg-signup/. With a valid login you should create two local files: `.username` and `.password` in the application root folder.
 
