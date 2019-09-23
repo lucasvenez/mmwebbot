@@ -1,4 +1,4 @@
-# MMWebBot: a crowler for the MMRF’s Relating Clinical Outcomes in MM to Personal Assessment of Genetic Profile (CoMMpass℠)
+# MMWebBot: a crawler for the MMRF’s Relating Clinical Outcomes in MM to Personal Assessment of Genetic Profile (CoMMpass℠)
 
 It aims at collecting data from the research.themmrf.org repository automatically.
 
