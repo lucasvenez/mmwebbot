@@ -5,6 +5,7 @@ from pathlib import Path
 import pandas as pd
 import time
 import os
+import sys
 
 username = open('.username', 'r').read()
 password = open('.password', 'r').read()
@@ -22,11 +23,15 @@ web.go_to('https://research.themmrf.org')
 
 web.click('Log In', classname='login_link')
 
-web.type(username, xpath='//*[@id="username"]')
+time.sleep(10)
 
-web.type(password, xpath='//*[@id="password"]')
+web.type(username, xpath='/html/body/div/div/div[1]/form/div[2]/div/div/input')
 
-web.click(xpath='//*[@id="fm1"]/div[4]/div/div/div/button')
+web.type(password, xpath='/html/body/div/div/div[1]/form/div[3]/div/div/input')
+
+web.click(xpath='/html/body/div/div/div[1]/form/div[4]/div/div/div/button')
+
+time.sleep(5)
 
 #
 # Got to therapy
@@ -51,7 +56,7 @@ def parse(identifier, columns, output_path):
 
             table = tree.xpath('//*[@id="DT_a_{}"]'.format(identifier))[0]
 
-            data_frame = pd.read_html(html.tostring(table))[0]
+            data_frame = pd.read_html(html.tostring(table))[0].iloc[:, :2]
 
             data_frame.columns = columns
 
@@ -76,8 +81,12 @@ def parse(identifier, columns, output_path):
 
         result.to_csv(output_path, sep='\t', index=True)
     
-    except:
-        print('Error while parsing ', identifier)
+    except Exception as e:
+        print('Error while parsing ', identifier, '\n\n', e)
+
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
         
     return result
 
@@ -86,7 +95,7 @@ def parse(identifier, columns, output_path):
 # CLINICAL
 ####################################################################################
 
-#parse('521cff587830a4468ce9f880', ['symptoms'], 'data/clinical/symptoms.tsv')
+parse('521cff587830a4468ce9f880', ['symptoms'], 'data/clinical/symptoms.tsv')
 
 #
 # Adverse Events
@@ -207,9 +216,6 @@ parse('57c7393ae4b06bbadc19587f', ['therapy_first_line_most_common'],
 # CLINICAL OUTCOME
 ####################################################################################
             
-parse('524991487830ae7d7f590ee2', ['disease_status'], 
-            'data/clinical_outcome/disease_status.tsv')
-            
 #
 # Treatment Response
 #
@@ -248,7 +254,7 @@ parse('51a4dd2fc026bea0862c61bd', ['cycles_to_first_response'],
 parse('51a4dd2fc026bea0862c61dd', ['days_to_best_response'], 
             'data/clinical_outcome/time_to_response/days_to_best_response.tsv')
 
-parse('51a4dd2fc026bea0862c61b5', ['days_to_first_response'], 
+parse('51a4dd2fc026bea0862c61b5', ['days_to_first_response'],
             'data/clinical_outcome/time_to_response/days_to_first_response.tsv')
 
 #
@@ -266,7 +272,8 @@ parse('524991487830ae7d7f590ee0', ['progression_free_survivel_status'],
 
 parse('53973a6564d0a98496b8e625', ['days_to_overall_survival'], 
             'data/clinical_outcome/time_to_endpoint/days_to_overall_survival.tsv')
-parse('53973a6564d0a98496b8e627', ['days_to_disease_progression'], 
+
+parse('53973a6564d0a98496b8e627', ['days_to_disease_progression'],
             'data/clinical_outcome/time_to_endpoint/days_to_disease_progression.tsv')
 
 ####################################################################################
@@ -342,4 +349,3 @@ parse('58c1e0d1e4b00470116b8a22', ['height'], 'data/demographics/height.tsv')
 parse('58c1e0d1e4b00470116b8a1a', ['race'], 'data/demographics/race.tsv')
 parse('58c1e0d1e4b00470116b8a20', ['weight'], 'data/demographics/weight.tsv')
 parse('58c1e0d3e4b00470116b8a51', ['family_cancer'], 'data/demographics/family_cancer.tsv')
-
