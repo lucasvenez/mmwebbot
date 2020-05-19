@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/155539529.svg)](https://zenodo.org/badge/latestdoi/155539529)
+
 # MMWebBot: a crawler for the MMRF CoMMpass Study Dataset
 
 It aims at collecting data from the research.themmrf.org repository automatically.
